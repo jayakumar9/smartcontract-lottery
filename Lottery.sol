@@ -41,7 +41,14 @@ contract Lottery is Ownable {
         
     }
     function endLottery() public onlyOwner{
-        uint256(keccack256(abi.encodePacked(nonce, msg.sender,block.difficulty,block.timestamp)))%players.length;
+        uint256(keccack256(abi.encodePacked(
+                                nonce,// nonce is predictable(aka,tranaction number
+                                msg.sender,// msg.sender is predictable
+                                block.difficulty,//csn actually be manipulated by the miners!
+                                block.timestamp // timestamp is predictable
+                                )
+                                )
+                                )%players.length;
     }
     
 }
