@@ -23,7 +23,8 @@ contract Lottery {
         //$50,$2000/ETH
         //50/2,000
         //50*100000/2000
-        uint256 costToEnter=(usdEntryFee *10**18)
+        uint256 costToEnter=(usdEntryFee *10**18)/price;
+        return costToEnter;
     }
     function startLottery() public{}
     function endLottery() public{}
