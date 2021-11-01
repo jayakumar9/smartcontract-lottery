@@ -4,5 +4,5 @@ dependencies:
   -smartcontractkit/chainlink-brownie-contracts@1.1.1
 compiler:
   solc:
-    reamppings:
+    remappings:
       -'@chainlink=smartcontractkit/chainlink-brownie-contracts@1.1.1'
