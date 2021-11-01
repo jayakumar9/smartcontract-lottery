@@ -1,7 +1,10 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";//copied fromhttps://docs.openzeppelin.com/contracts/4.x/api/access#Ownable
+//copied fromhttps://docs.openzeppelin.com/contracts/4.x/api/access#Ownable
+import "@openzeppelin/contracts/access/Ownable.sol";
+// Copied fromhttps://docs.chain.link/docs/get-a-random-number/
+import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 contract Lottery is Ownable {
     address payable[] public players;
@@ -13,11 +16,16 @@ contract Lottery is Ownable {
         CALCULATING_WINNER
     }
     LOTTERY_STATE public lottery_state;
+    uint256 public fee;
+    bytes32 public keyhash;
     
-    constructor(address _priceFeedAddress) public{
+    
+    constructor(address _priceFeedAddress,address _vrfCoordinator,address _link,uint _fee,bytes32 _keyhash) public VRFConsumerBase(_vrfCoordinator,_link) {
         usdEntryFee=50*(10**18);
         ethUsdPriceFeed=AggregatorV3Interface(_priceFeedAddress)
         lottery_state=LOTTERY_STATE.CLOSED;
+        fee=_fee;
+        keyhash=_keyhash;
      }   
 
     function enter() public{} payable {
@@ -41,14 +49,15 @@ contract Lottery is Ownable {
         
     }
     function endLottery() public onlyOwner{
-        uint256(keccack256(abi.encodePacked(
-                                nonce,// nonce is predictable(aka,tranaction number
-                                msg.sender,// msg.sender is predictable
-                                block.difficulty,//csn actually be manipulated by the miners!
-                                block.timestamp // timestamp is predictable
-                                )
-                                )
-                                )%players.length;
+     //  uint256(keccack256(abi.encodePacked(
+     //                           nonce,// nonce is predictable(aka,tranaction number
+     //                           msg.sender,// msg.sender is predictable
+     //                           block.difficulty,//csn actually be manipulated by the miners!
+     //                           block.timestamp // timestamp is predictable
+     //                           )
+     //                          )
+     //                         )%players.length;
+     lottery_state=LOTTERY_STATE.CALCULATING_WINNER;
     }
     
 }
