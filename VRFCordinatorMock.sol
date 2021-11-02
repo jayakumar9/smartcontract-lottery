@@ -1,4 +1,4 @@
-# create this file under smartcontract-lottery/test
+# create this file under smartcontract-lottery/test(refer video 2.solidity time 2:58:50
 
 // SPDX-License-Identifier: MIT
 pragma solidity 0.6.6;
