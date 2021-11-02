@@ -55,5 +55,7 @@ INITIAL_VALUE=200000000000
  def deploy_mock(decimals=DECIMALS,initial_value=INITIAL_VALUE):
     account=get_account()
     MockV3Aggregator.deploy(decimals, initial_value, {"from":account})
+    LinkToken=LinkToken,deploy({"from":account})
+    VRFCoordinatorMock.deploy(link_token.address,{"from":account})
     print("Deployed!")
             
