@@ -2,7 +2,7 @@
 
 
 def deploy_lottery():
-    pass
+    account=get_account()
 
 def main()
     deploy_lottery()
