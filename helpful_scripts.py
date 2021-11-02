@@ -42,12 +42,18 @@ contract_to_mock={"eth_usd_price_feed":MockV3Aggregator}
          # MockV3Aggregator[-1]
     else:
         contract_address=config["networks"][network.show_active()][contract_name]
+        #address
+        #ABI
+        contract=contract.from_abi(contract_type._name, contract_address, contract_type.abi)
+        # MockV3Aggregator.abi
+    return contract    
+        
             
 DECIMALS=8
 INITIAL_VALUE=200000000000
             
  def deploy_mock(decimals=DECIMALS,initial_value=INITIAL_VALUE):
     account=get_account()
-    mock_price_feed=MockV3Aggregator.deploy(decimals, initial_value, {"from":account})
+    MockV3Aggregator.deploy(decimals, initial_value, {"from":account})
     print("Deployed!")
             
