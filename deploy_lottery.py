@@ -1,5 +1,5 @@
 # create this file under smartcontract-lottery/scripts refer video 2.solidity time 2:40:42
-from scripts.helpful_scripts import get_account, get_contract
+from scripts.helpful_scripts import get_account, get_contract, fund_with_link
 from brownie import Lottery, network
 
 
@@ -32,11 +32,9 @@ def end_lottery():
     lottery=Lottery[-1]                                                              
     # fund the contract                                                              
     # then end the lottery 
+    fund_with_link(lottery.address)                                                          
                                                               
-                                                              
-                                                              
-                                                              
-                                                              
+                                                          
                                                               
                                                               
 def main()
