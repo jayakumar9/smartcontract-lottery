@@ -19,4 +19,17 @@ def get_account(index=None,id=None):
         return accounts[0]
      else:
         return accounts.add(config["wallets"]["from_key"])
+    
+ def get_contract(contract_name):
+    """ This function will grab the contract address from the brownie config 
+    if defined, otherwise, it will deploy a mock version of that contract, and
+    return that mock contract.
+    
+    Args:
+        contract_name(string)
+        
+    Returns:
+        brownie.network.contract.projectContract:The most recently deployed version of this contract.    
+    
+    """
             
