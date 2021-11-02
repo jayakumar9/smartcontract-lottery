@@ -6,8 +6,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // Copied fromhttps://docs.chain.link/docs/get-a-random-number/
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
-contract Lottery is Ownable {
+contract Lottery is VRFConsumerBase,Ownable {
     address payable[] public players;
+    address public recentWinner;
     uint256 public usdEntryFee;
     AggregatorV3Interface internal ethUsdPriceFeed;
     enum LOTTERY_STATE{
@@ -20,7 +21,7 @@ contract Lottery is Ownable {
     bytes32 public keyhash;
     
     
-    constructor(address _priceFeedAddress,address _vrfCoordinator,address _link,uint _fee,bytes32 _keyhash) public VRFConsumerBase(_vrfCoordinator,_link) {
+    constructor(address _priceFeedAddress,address _vrfCoordinator,address _link,uint256 _fee,bytes32 _keyhash) public VRFConsumerBase(_vrfCoordinator,_link) {
         usdEntryFee=50*(10**18);
         ethUsdPriceFeed=AggregatorV3Interface(_priceFeedAddress)
         lottery_state=LOTTERY_STATE.CLOSED;
@@ -58,8 +59,15 @@ contract Lottery is Ownable {
      //                          )
      //                         )%players.length;
      lottery_state=LOTTERY_STATE.CALCULATING_WINNER;
-     bytes32 requestId=requestRandomness(keyhash,fee);
+     bytes32 requestId=requestRandomness(keyhash,fee);//refer video 2.solidity time 2:30:38
      
     }
-    
+    function fulfillRandomness(bytes _requestId,uint256 _randomness) internal override{
+        require(lottery_state==LOTTERY_STATE.CALCULATING_WINNER,"You aren't there yet!");
+        require(_randomness>0,""random-not-found");
+        uint256 indexOfWinner=_randomness%players.length;
+        recentWinner=players[indexOfWinner];
+        recentWinner.transfer(address(this).balance);
+        
+    }
 }
