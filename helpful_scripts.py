@@ -58,4 +58,12 @@ INITIAL_VALUE=200000000000
     LinkToken=LinkToken,deploy({"from":account})
     VRFCoordinatorMock.deploy(link_token.address,{"from":account})
     print("Deployed!")
-            
+
+    
+def fund_with_link(contract_address, account=None, link_token=None, amount=100000000000000000 ) #0.1L    
+    account= account if account else get_account()
+    link_token= link_token if link_token else get_contract("link_token")
+    tx=link_token.transfer(contract_address, amount, {"from":account})
+    tx.wait(1)
+    print("Fund contract!")
+    return tx
