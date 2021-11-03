@@ -72,4 +72,7 @@ def test_can_pick_winner_correctly():
     lottery.enter({"from":get_account(index=1),"value":lottery.getEntranceFee()})
     lottery.enter({"from":get_account(index=2),"value":lottery.getEntranceFee()})
     fund_with_link(lottery)
+    transaction=lottery.endLottery({"from":account})
+    request_id=transaction.events["RequestedRandomness"]["requestId"]
+    get_contract("vrf_coordinator")
     
