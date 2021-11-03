@@ -6,7 +6,6 @@ from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS,get_account,fu
 from scripts.deploy_lottery import deploy_lottery
 import time
 
-
 def test_can_pick_winner():
     if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         pytest.skip()
