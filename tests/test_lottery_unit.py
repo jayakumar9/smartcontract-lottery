@@ -47,4 +47,17 @@ def test_can_start_and_enter_lottery():
     # Assert
     assert lottery.players(0)==account
     
-
+    
+def test_can_end_lottery():
+    # Arrange
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        pytest.skip()    
+    lottery=deploy_lottery()
+    account=get_account()
+    lottery.startLottery({"from":account})
+    lottery.enter({"from":account,"value":lottery.getEntranceFee()})
+    fund_with_link(lottery)
+    lottery.endLottery({"from":account})
+    assert lottery.lottery_state()==2
+    
+    
