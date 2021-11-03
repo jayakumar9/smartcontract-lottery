@@ -2,7 +2,7 @@
 
 #0.019
 # 190000000000000000
-from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS.get_account,fund_with_link
+from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS.get_account,fund_with_link,get_contract
 from brownie import Lottery. accounts. config, network,exceptions
 from scripts.deploy_lottery import deploy_lottery
 from web3 import web3
@@ -74,5 +74,16 @@ def test_can_pick_winner_correctly():
     fund_with_link(lottery)
     transaction=lottery.endLottery({"from":account})
     request_id=transaction.events["RequestedRandomness"]["requestId"]
-    get_contract("vrf_coordinator")
+    STATIC_RNG=777
+    get_contract("vrf_coordinator").callBackWithRandomness(request_id,STATIC_RNG,lottery.address,{"from":account})
+    
+    starting_balance_of_account=account.balance
+    balance_of_lottery=lottery.balance()
+    # 777%3 = 0
+    assert lottery.recentWinner()==account
+    assert lottery.balance()==0
+    assert account.balance==starting_balance_of_account+balance_of_lottery // refer at video 3.solidity time 0:42:17
+    
+    
+    
     
