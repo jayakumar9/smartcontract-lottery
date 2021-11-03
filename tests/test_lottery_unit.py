@@ -1,6 +1,5 @@
 # create this file under smartcontract-lottery/tests
 
-
 #0.019
 # 190000000000000000
 from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS.get_account,fund_with_link
