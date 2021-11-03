@@ -19,7 +19,7 @@ def test_can_pick_winner():
     lottery.endLottery({"from":account})
     time.sleep(60)
     assert lottery.recentWinner()==account
-    assert lottery.balance==0
+    assert lottery.balance()==0
     
     
         
