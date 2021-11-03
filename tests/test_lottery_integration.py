@@ -12,7 +12,7 @@ def test_can_pick_winner():
         pytest.skip()
     lottery=deploy_lottery()
     account=get_account()
-    lottery.start_lottery({"from":account})
+    lottery.startLottery({"from":account})
     lottery.enter({"from":account,"value":lottery.gatEntranceFee()})
     lottery.enter({"from":account,"value":lottery.gatEntranceFee()})
     fund_with_link(lottery)
