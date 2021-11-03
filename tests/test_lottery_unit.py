@@ -9,6 +9,7 @@ from web3 import web3
 import pytest
 
 
+
 def test_get_entrance_fee():
     if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         pytest.skip()
