@@ -40,7 +40,7 @@ def end_lottery():
     time.sleep(60)
     print(f"{lottery.recentWinner()} is the new winner!")
                                                               
-                                                          
+                                                         
                                                               
                                                               
 def main()
