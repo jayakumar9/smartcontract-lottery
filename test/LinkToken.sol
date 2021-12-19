@@ -1,6 +1,7 @@
 # create this file under smartcontract-lottery/test
 
 // SPDX-License-Identifier: MIT
+//check fot commit purpose only
 pragma solidity ^0.4.11;
 
 import "@chainlink/contracts/src/v0.4/ERC677Token.sol";
